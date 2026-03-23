@@ -25,11 +25,268 @@
     <!-- CSS local -->
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
-  <body>
-    <nav></nav>
-    <header></header>
-    <main></main>
-    <footer></footer>
+  <body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg bg-info sticky-top">
+      <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="#"
+          ><i class="fa-solid fa-cloud-sun me-2"></i>Clima de Chile</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav ms-auto">
+            <a
+              id="link-home"
+              class="nav-link active"
+              aria-current="page"
+              href="#"
+              >Home</a
+            >
+            <a class="nav-link" href="#">Acerca de</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero-section py-5 px-2 px-md-0">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 offset-md-1">
+            <article class="row d-flex flex-row card p-4 hero-card">
+              <div class="col-md-6">
+                <h2 class="fw-bolder mb-1">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <span>Santiago</span>
+                </h2>
+                <h2 class="h5">Región Metropolitana</h2>
+                <div class="text-center text-md-start">
+                  <h1 class="display-1 fw-bold text-body-emphasis lh-1 mb-2">
+                    <span>23°</span>
+                    <i
+                      class="fa-solid fa-sun display-4 mt-3 text-secondary"
+                    ></i>
+                  </h1>
+                  <h3 class="ms-1"><span>09°</span> / <span>24°</span></h3>
+                  <p>
+                    <span class="badge text-bg-info mb-4">soleado</span>
+                  </p>
+                </div>
+                <h4 class="lead">Sábado 31 de agosto del 2026</h4>
+              </div>
+
+              <div class="col-md-6">
+                <p class="lead">Pronóstico siguientes 6 días</p>
+                <ul class="list-group">
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-baseline border-info-subtle"
+                  >
+                    <p class="mb-0">lun</p>
+                    <div>
+                      <i class="fa-solid fa-cloud text-info"></i> /
+                      <i class="fa-solid fa-moon text-info"></i>
+                    </div>
+                    <p class="mb-0"><span>11°</span>/<span>22°</span></p>
+                  </li>
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-baseline border-info-subtle"
+                  >
+                    <p class="mb-0">lun</p>
+                    <div>
+                      <i class="fa-solid fa-cloud text-info"></i> /
+                      <i class="fa-solid fa-moon text-info"></i>
+                    </div>
+                    <p class="mb-0"><span>11°</span>/<span>22°</span></p>
+                  </li>
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-baseline border-info-subtle"
+                  >
+                    <p class="mb-0">lun</p>
+                    <div>
+                      <i class="fa-solid fa-cloud text-info"></i> /
+                      <i class="fa-solid fa-moon text-info"></i>
+                    </div>
+                    <p class="mb-0"><span>11°</span>/<span>22°</span></p>
+                  </li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="d-flex flex-column flex-grow-1">
+      <section id="vista-home" class="py-4 py-md-5">
+        <h2 class="text-center display-5 mb-5">
+          Seleccione una de las siguientes siudades
+        </h2>
+        <div class="container">
+          <div id="regiones-container" class="row mt-0 g-4">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <article class="card card-regiones">
+                <img
+                  src="https://picsum.photos/200/300"
+                  class="card-img-top object-fit-cover"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <h3 class="card-title h5">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Santiago</span>
+                  </h3>
+                  <h2
+                    class="display-5 fw-bold text-body-emphasis lh-1 mb-2 d-flex justify-content-between align-items-baseline"
+                  >
+                    <span>23°</span>
+                    <i
+                      class="fa-solid fa-sun display-6 text-secondary mt-3"
+                    ></i>
+                  </h2>
+                  <p
+                    class="ms-1 mb-0 d-flex justify-content-between align-items-baseline"
+                  >
+                    <span>09°/24°</span>
+                    <span class="badge text-bg-info">soleado</span>
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="vista-detalle" class="py-5 flex-grow-1">
+        <div class="container">
+          <div class="row">
+            <div class="col-10 offset-1 col-lg-8 offset-lg-2">
+              <button id="btn-volver" class="btn btn-outline-light mb-4">
+                <i class="fa-solid fa-arrow-left"></i>Volver al catalogo
+              </button>
+
+              <article id="detalle-container">
+                <div class="detalle-header mb-4">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <img
+                        src="https://picsum.photos/200/300"
+                        class="img-fluid object-fit-cover w-100 mb-4 mb-md-0"
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <h2 class="fw-bolder mb-1">
+                        <i class="fa-solid fa-location-dot"></i> Santiago
+                      </h2>
+                      <h5 class="mb-4">Región Metropolitana</h5>
+                      <p class="detalle-descripcion mb-0">
+                        Santiago es la capital de Chile y una de las metrópolis
+                        más modernas e importantes de Latinoamérica, con más de
+                        siete millones de habitantes. Rodeada por la majestuosa
+                        Cordillera de los Andes al oriente y la Cordillera de la
+                        Costa al poniente, ofrece una postal única de montañas
+                        nevadas en días despejados. La ciudad concentra los
+                        principales centros culturales, financieros y
+                        gubernamentales del país, conviviendo barrios históricos
+                        con rascacielos ultramodernos. A solo una hora se puede
+                        combinar la playa de Viña del Mar con el snow de las
+                        estaciones de ski de la cordillera.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="detalle-data">
+                  <div class="row">
+                    <div class="col-12 col-md-8 offset-md-2">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p class="lead mb-2">Temperatura actual</p>
+                          <h3
+                            class="display-3 fw-bold lh-1 mb-2 d-flex justify-content-between align-items-baseline text-"
+                          >
+                            <span class="text-info">23°</span>
+                            <i class="fa-solid fa-sun display-5 mt-3"></i>
+                          </h3>
+                          <div
+                            class="ms-1 mb-0 d-flex align-items-baseline justify-content-between"
+                          >
+                            <p>
+                              <i class="fa-solid fa-arrow-down"></i>
+                              <span>09°</span> /
+                              <i class="fa-solid fa-arrow-up"></i>
+                              <span>24°</span>
+                            </p>
+                            <p>
+                              <span class="badge text-bg-info">soleado</span>
+                            </p>
+                          </div>
+                        </div>
+                        <div
+                          class="col-md-6 d-flex flex-row flex-md-column justify-content-between"
+                        >
+                          <div class="detalle-viento">
+                            <h5><i class="fa-solid fa-wind"></i> Viento</h5>
+                            <p><span>16</span> km/h</p>
+                          </div>
+                          <div class="detalle-humedad">
+                            <h5><i class="fa-solid fa-water"></i> Humedad</h5>
+                            <p><span>44</span>%</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 col-md-8 offset-md-2">
+                      <p class="lead text-center mt-2">
+                        Pronóstico siguientes 6 días
+                      </p>
+                      <ul class="list-group">
+                        <li
+                          class="list-group-item d-flex justify-content-between align-items-baseline"
+                        >
+                          <p class="mb-0">lun</p>
+                          <div>
+                            <i class="fa-solid fa-cloud text-info"></i> /
+                            <i class="fa-solid fa-moon text-info"></i>
+                          </div>
+                          <p class="mb-0"><span>11°</span>/<span>22°</span></p>
+                        </li>
+                        <li
+                          class="list-group-item d-flex justify-content-between align-items-baseline"
+                        >
+                          <p class="mb-0">lun</p>
+                          <div>
+                            <i class="fa-solid fa-cloud text-info"></i> /
+                            <i class="fa-solid fa-moon text-info"></i>
+                          </div>
+                          <p class="mb-0"><span>11°</span>/<span>22°</span></p>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-info-subtle text-center py-4">
+      <div class="container">
+        <p class="mb-0">
+          <i class="fa-solid fa-cloud-sun me-2"></i>Clima de Chile &copy;2026
+        </p>
+      </div>
+    </footer>
 
     <!-- JS Bootstrap -->
     <script

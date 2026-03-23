@@ -1197,4 +1197,4 @@ const regiones = [
   },
 ];
 
-console.log(regiones[0].ciudadCapital);
+console.log(regiones[15].descripcion);
