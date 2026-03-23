@@ -1204,6 +1204,7 @@ const regionesContainer = document.querySelector("#regiones-container");
 const vistaDetalle = document.querySelector("#vista-detalle");
 const detalleContainer = document.querySelector("#detalle-container");
 const pronosticoDetalle = document.querySelector("#pronostico-detalle");
+const botonesHome = document.querySelectorAll(".btn-home");
 
 /* variables globales */
 const diasSemana = [
@@ -1255,45 +1256,214 @@ function renderHero() {
   const rm = regiones[15];
 
   let html = `
-    <div class="container">
-      <div class="row">
-        <div class="col-md-10 offset-md-1">
-          <article class="row d-flex flex-row card p-4 hero-card">
-            <div class="col-md-6">
-              <h2 class="fw-bolder mb-1">
-                <i class="fa-solid fa-location-dot"></i>
-                <span>${rm.ciudadCapital}</span>
-              </h2>
-              <h2 class="h5 fw-light mb-4">Región ${rm.nombreRegion}</h2>
-              <div class="text-center text-md-start">
-                <h1 class="display-1 fw-bold text-body-emphasis lh-1 mb-2">
-                  <span>${rm.tempActual}°</span>
-                  <i
-                    class="fa-solid ${rm.estadoClimatico.icono} display-4 mt-3 text-secondary"
-                  ></i>
-                </h1>
-                <h3 class="ms-1"><span>${rm.tempMinima}°</span> / <span>${rm.tempMaxima}°</span></h3>
-                <p class="mb-2">
-                  <span class="badge text-bg-info mb-4">${rm.estadoClimatico.texto}</span>
-                </p>
-              </div>
-              <h4 class="lead">${imprimirFecha(hoy)}</h4>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 offset-md-1">
+        <article class="row d-flex flex-row card p-4 hero-card" data-id="${rm.id}">
+          <div class="col-md-6">
+            <h2 class="fw-bolder mb-1">
+              <i class="fa-solid fa-location-dot"></i>
+              <span>${rm.ciudadCapital}</span>
+            </h2>
+            <h2 class="h5 fw-light mb-4">Región ${rm.nombreRegion}</h2>
+            <div class="text-center text-md-start">
+              <h1 class="display-1 fw-bold text-body-emphasis lh-1 mb-2">
+                <span>${rm.tempActual}°</span>
+                <i
+                  class="fa-solid ${rm.estadoClimatico.icono} display-4 mt-3 text-info"
+                ></i>
+              </h1>
+              <h3 class="ms-1"><span>${rm.tempMinima}°</span> / <span>${rm.tempMaxima}°</span></h3>
+              <p class="mb-2">
+                <span class="badge text-bg-secondary mb-4">${rm.estadoClimatico.texto}</span>
+              </p>
             </div>
+            <h4 class="lead">${imprimirFecha(hoy)}</h4>
+          </div>
 
-            <div class="col-md-6">
-              <p class="lead">Pronóstico siguientes 6 días</p>
-              <ul class="list-group">
-                ${pronosticoHTML(rm)}
-              </ul>
-            </div>
-          </article>
-        </div>
+          <div class="col-md-6">
+            <p class="lead">Pronóstico siguientes 6 días</p>
+            <ul class="list-group">
+              ${pronosticoHTML(rm)}
+            </ul>
+          </div>
+        </article>
       </div>
     </div>
+  </div>
   `;
 
   heroSection.innerHTML = html;
+  const heroCard = document.querySelector(".hero-card");
+  heroCard.addEventListener("click", () => {
+    mostrarDetalle(Number(heroCard.dataset.id));
+  });
 }
 
+function renderCards() {
+  // tecnica del profe con .forEach() para renderizar, concadenando cada elemento a un string vacio
+  let html = "";
+
+  regiones.forEach((region) => {
+    html += `
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <article class="card card-regiones" data-id="${region.id}">
+        <img
+          src="https://picsum.photos/200/300"
+          class="card-img-top object-fit-cover"
+          alt="${region.ciudadCapital}"
+        />
+        <div class="card-body">
+          <h3 class="card-title h5">
+            <i class="fa-solid fa-location-dot"></i> 
+            ${region.ciudadCapital}
+          </h3>
+          <h2
+            class="display-5 fw-bold text-body-emphasis lh-1 mb-2 d-flex justify-content-between align-items-baseline"
+          >
+            <span>${region.tempActual}°</span>
+            <i
+              class="fa-solid ${region.estadoClimatico.icono} display-6 text-info mt-3"
+            ></i>
+          </h2>
+          <p
+            class="ms-1 mb-0 d-flex justify-content-between align-items-baseline"
+          >
+            <span>${region.tempMinima}°/${region.tempMaxima}°</span>
+            <span class="badge text-bg-secondary">${region.estadoClimatico.texto}</span>
+          </p>
+        </div>
+      </article>
+    </div>
+    `;
+  });
+
+  regionesContainer.innerHTML = html;
+}
+
+function renderDetalle(id) {
+  const region = regiones.find((r) => r.id === id);
+
+  if (!region) {
+    detalleContainer.innerHTML = "<p>No se encontró la región</p>";
+    return;
+  }
+
+  detalleContainer.innerHTML = `
+  <div class="detalle-header mb-4">
+    <div class="row">
+      <div class="col-md-6">
+        <img
+          src="https://picsum.photos/200/300"
+          class="img-fluid object-fit-cover w-100 mb-4 mb-md-0"
+          alt="${region.ciudadCapital}"
+        />
+      </div>
+      <div class="col-md-6">
+        <h2 class="fw-bolder mb-1">
+          <i class="fa-solid fa-location-dot"></i> ${region.ciudadCapital}
+        </h2>
+        <h5 class="mb-4">Región de ${region.nombreRegion}</h5>
+        <p class="detalle-descripcion mb-0">
+          ${region.descripcion}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="detalle-data">
+    <div class="row">
+      <div class="col-12 col-md-8 offset-md-2">
+        <div class="row">
+          <div class="col-md-6">
+            <p class="lead mb-2">Temperatura actual</p>
+            <h3
+              class="display-3 fw-bold lh-1 mb-2 d-flex justify-content-between align-items-baseline text-"
+            >
+              <span class="text-info">${region.tempActual}°</span>
+              <i class="fa-solid ${region.estadoClimatico.icono} display-5 mt-3"></i>
+            </h3>
+            <div
+              class="ms-1 mb-0 d-flex align-items-baseline justify-content-between"
+            >
+              <p>
+                <i class="fa-solid fa-arrow-down"></i>
+                ${region.tempMinima}° /
+                <i class="fa-solid fa-arrow-up"></i>
+                ${region.tempMaxima}°
+              </p>
+              <p>
+                <span class="badge text-bg-info">${region.estadoClimatico.texto}</span>
+              </p>
+            </div>
+          </div>
+          <div
+            class="col-md-6 d-flex flex-row flex-md-column justify-content-between"
+          >
+            <div class="detalle-viento">
+              <h5><i class="fa-solid fa-wind"></i> Viento</h5>
+              <p>${region.viento} km/h</p>
+            </div>
+            <div class="detalle-humedad">
+              <h5><i class="fa-solid fa-water"></i> Humedad</h5>
+              <p>${region.humedad}%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-8 offset-md-2">
+        <p class="lead text-center mt-2">
+          Pronóstico siguientes 6 días
+        </p>
+        <ul id="pronostico-detalle" class="list-group">
+          ${pronosticoHTML(region)}
+        </ul>
+      </div>
+    </div>
+  </div>
+  `;
+}
+
+function mostrarDetalle(id) {
+  renderDetalle(id);
+
+  heroSection.classList.add("d-none");
+  vistaHome.classList.add("d-none");
+  vistaDetalle.classList.remove("d-none");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}
+
+function mostrarHome() {
+  heroSection.classList.remove("d-none");
+  vistaHome.classList.remove("d-none");
+  vistaDetalle.classList.add("d-none");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}
+
+regionesContainer.addEventListener("click", (event) => {
+  const card = event.target.closest(".card-regiones");
+
+  // guardian
+  if (!card) {
+    return;
+  }
+
+  const idRegion = Number(card.dataset.id);
+  mostrarDetalle(idRegion);
+});
+
+botonesHome.forEach((btn) => {
+  btn.addEventListener("click", mostrarHome);
+});
+
 renderHero();
-pronosticoDetalle.innerHTML = pronosticoHTML(regiones[15]);
+renderCards();
