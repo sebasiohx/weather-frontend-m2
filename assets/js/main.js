@@ -1197,4 +1197,103 @@ const regiones = [
   },
 ];
 
-console.log(regiones[15].descripcion);
+/* referencias DOM */
+const heroSection = document.querySelector("#hero-section");
+const vistaHome = document.querySelector("#vista-home");
+const regionesContainer = document.querySelector("#regiones-container");
+const vistaDetalle = document.querySelector("#vista-detalle");
+const detalleContainer = document.querySelector("#detalle-container");
+const pronosticoDetalle = document.querySelector("#pronostico-detalle");
+
+/* variables globales */
+const diasSemana = [
+  "domingo",
+  "lunes",
+  "martes",
+  "miercoles",
+  "jueves",
+  "viernes",
+  "sabado",
+];
+const hoy = new Date();
+// para detectar que dia de la semana es hoy
+const nombreDiaHoy = diasSemana[hoy.getDay()];
+
+/* funciones */
+function pronosticoHTML(region) {
+  return region.pronostico
+    .filter((dia) => {
+      return dia.dia !== nombreDiaHoy;
+    })
+    .map((dia) => {
+      return `
+    <li class="list-group-item d-flex justify-content-between align-items-baseline border-info-subtle">
+      <p class="pronostico-siglas mb-0">${dia.siglas}</p>
+      <div class="pronostico-climas-container">
+        <i class="fa-solid ${dia.climaDia.icono} text-info"></i> /
+        <i class="fa-solid ${dia.climaNoche.icono} text-info"></i>
+      </div>
+      <p class="pronostico-temperaturas mb-0">${dia.tempMin}°/${dia.tempMax}</p>
+    </li>
+    `;
+    })
+    .join("");
+}
+
+function imprimirFecha(fecha) {
+  return fecha
+    .toLocaleDateString("es-ES", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    })
+    .replace(",", "");
+}
+
+function renderHero() {
+  const rm = regiones[15];
+
+  let html = `
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 offset-md-1">
+          <article class="row d-flex flex-row card p-4 hero-card">
+            <div class="col-md-6">
+              <h2 class="fw-bolder mb-1">
+                <i class="fa-solid fa-location-dot"></i>
+                <span>${rm.ciudadCapital}</span>
+              </h2>
+              <h2 class="h5 fw-light mb-4">Región ${rm.nombreRegion}</h2>
+              <div class="text-center text-md-start">
+                <h1 class="display-1 fw-bold text-body-emphasis lh-1 mb-2">
+                  <span>${rm.tempActual}°</span>
+                  <i
+                    class="fa-solid ${rm.estadoClimatico.icono} display-4 mt-3 text-secondary"
+                  ></i>
+                </h1>
+                <h3 class="ms-1"><span>${rm.tempMinima}°</span> / <span>${rm.tempMaxima}°</span></h3>
+                <p class="mb-2">
+                  <span class="badge text-bg-info mb-4">${rm.estadoClimatico.texto}</span>
+                </p>
+              </div>
+              <h4 class="lead">${imprimirFecha(hoy)}</h4>
+            </div>
+
+            <div class="col-md-6">
+              <p class="lead">Pronóstico siguientes 6 días</p>
+              <ul class="list-group">
+                ${pronosticoHTML(rm)}
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  `;
+
+  heroSection.innerHTML = html;
+}
+
+renderHero();
+pronosticoDetalle.innerHTML = pronosticoHTML(regiones[15]);
