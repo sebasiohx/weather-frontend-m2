@@ -1222,10 +1222,16 @@ const nombreDiaHoy = diasSemana[hoy.getDay()];
 
 /* funciones */
 function pronosticoHTML(region) {
-  return region.pronostico
-    .filter((dia) => {
-      return dia.dia !== nombreDiaHoy;
-    })
+  const indiceDiaHoyRegion = region.pronostico.findIndex(
+    (dia) => dia.dia === nombreDiaHoy,
+  );
+
+  const pronosticoRotado = [
+    ...region.pronostico.slice(indiceDiaHoyRegion + 1),
+    ...region.pronostico.slice(0, indiceDiaHoyRegion),
+  ];
+
+  return pronosticoRotado
     .map((dia) => {
       return `
     <li class="list-group-item d-flex justify-content-between align-items-baseline border-info-subtle">
@@ -1252,6 +1258,12 @@ function imprimirFecha(fecha) {
     .replace(",", "");
 }
 
+function imprimirPronombre(id) {
+  if ([6, 7, 8, 9].includes(id)) return "del";
+  if (id === 15) return "";
+  return "de";
+}
+
 function renderHero() {
   const rm = regiones[15];
 
@@ -1265,7 +1277,7 @@ function renderHero() {
               <i class="fa-solid fa-location-dot"></i>
               <span>${rm.ciudadCapital}</span>
             </h2>
-            <h2 class="h5 fw-light mb-4">Región ${rm.nombreRegion}</h2>
+            <h2 class="h5 fw-light mb-4">Región ${imprimirPronombre(rm.id)} ${rm.nombreRegion}</h2>
             <div class="text-center text-md-start">
               <h1 class="display-1 fw-bold text-body-emphasis lh-1 mb-2">
                 <span>${rm.tempActual}°</span>
@@ -1363,7 +1375,7 @@ function renderDetalle(id) {
         <h2 class="fw-bolder mb-1">
           <i class="fa-solid fa-location-dot"></i> ${region.ciudadCapital}
         </h2>
-        <h5 class="mb-4">Región de ${region.nombreRegion}</h5>
+        <h5 class="mb-4">Región ${imprimirPronombre(region.id)} ${region.nombreRegion}</h5>
         <p class="detalle-descripcion mb-0">
           ${region.descripcion}
         </p>
