@@ -1,6 +1,7 @@
 #hero-section {
-  background-image: url("https://picsum.photos/1920/1080");
+  background-image: url("../img/bg-santiago.jpg");
   background-size: cover;
+  background-position: center bottom;
 }
 
 .hero-card {
@@ -54,4 +55,17 @@
 
 .detalle-descripcion {
   font-size: 0.875rem;
+}
+
+.detalle-img {
+  height: 200px;
+  width: 100%;
+}
+
+@media (width >= 768px) {
+  .detalle-img {
+    height: 360px;
+    width: 420px;
+    max-width: 100%;
+  }
 }

@@ -1222,6 +1222,7 @@ const nombreDiaHoy = diasSemana[hoy.getDay()];
 
 /* funciones */
 function pronosticoHTML(region) {
+  // para buscar el indice del elemento donde el nombre de los dias coincida
   const indiceDiaHoyRegion = region.pronostico.findIndex(
     (dia) => dia.dia === nombreDiaHoy,
   );
@@ -1237,8 +1238,8 @@ function pronosticoHTML(region) {
     <li class="list-group-item d-flex justify-content-between align-items-baseline border-info-subtle">
       <p class="pronostico-siglas mb-0">${dia.siglas}</p>
       <div class="pronostico-climas-container">
-        <i class="fa-solid ${dia.climaDia.icono} text-info"></i> /
-        <i class="fa-solid ${dia.climaNoche.icono} text-info"></i>
+        <i class="fa-solid ${dia.climaDia.icono} text-info" title="${dia.climaDia.texto}"></i> /
+        <i class="fa-solid ${dia.climaNoche.icono} text-info" title="${dia.climaNoche.texto}"></i>
       </div>
       <p class="pronostico-temperaturas mb-0">${dia.tempMin}°/${dia.tempMax}</p>
     </li>
@@ -1248,7 +1249,7 @@ function pronosticoHTML(region) {
 }
 
 function imprimirFecha(fecha) {
-  return fecha
+  const fechaLiteral = fecha
     .toLocaleDateString("es-ES", {
       weekday: "long",
       day: "numeric",
@@ -1256,6 +1257,9 @@ function imprimirFecha(fecha) {
       year: "numeric",
     })
     .replace(",", "");
+
+  // para imprimir la fecha con la primera letra en mayusculas
+  return fechaLiteral[0].toUpperCase() + fechaLiteral.slice(1);
 }
 
 function imprimirPronombre(id) {
@@ -1306,7 +1310,9 @@ function renderHero() {
   `;
 
   heroSection.innerHTML = html;
+
   const heroCard = document.querySelector(".hero-card");
+
   heroCard.addEventListener("click", () => {
     mostrarDetalle(Number(heroCard.dataset.id));
   });
@@ -1321,7 +1327,7 @@ function renderCards() {
     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
       <article class="card card-regiones" data-id="${region.id}">
         <img
-          src="https://picsum.photos/200/300"
+          src="./assets/img/${region.img}"
           class="card-img-top object-fit-cover"
           alt="${region.ciudadCapital}"
         />
@@ -1366,8 +1372,8 @@ function renderDetalle(id) {
     <div class="row">
       <div class="col-md-6">
         <img
-          src="https://picsum.photos/200/300"
-          class="img-fluid object-fit-cover w-100 mb-4 mb-md-0"
+          src="./assets/img/${region.img}"
+          class="detalle-img object-fit-cover mb-4 mb-md-0"
           alt="${region.ciudadCapital}"
         />
       </div>
